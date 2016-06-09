@@ -9,17 +9,17 @@ import android.widget.TextView;
 
 
 public class CellAdapter extends BaseAdapter {
-    private final Boolean mCellStates[][];
     private final Context mContext;
     private int totalCount;
     private int rowPosition;
     private int columnPosition;
+    private boolean mCellStates[][];
 
-    public CellAdapter(Context context, Boolean states[][]) {
-        mCellStates = states;
+    public CellAdapter(Context context, boolean states[][]) {
         mContext = context;
         rowPosition = 0;
         columnPosition = 0;
+        mCellStates = states;
         totalCount = getColumnCount() * getRowCount();
     }
 
@@ -63,5 +63,9 @@ public class CellAdapter extends BaseAdapter {
 
     public Object getItem(int rowNum, int columnNum) {
         return mCellStates[rowNum][columnNum];
+    }
+
+    public void setStates(boolean[][] states) {
+        mCellStates = states;
     }
 }
