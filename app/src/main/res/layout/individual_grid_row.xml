@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="cellState"
+            type="com.dhara.gameoflife.model.BindableBoolean"/>
+        <variable
+            name="handler"
+            type="com.dhara.gameoflife.callbacks.ICellClickHandlers"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:padding="5dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:onClick="@{handler.onItemClicked}">
+        <TextView
+            android:id="@+id/txt_cell_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@{cellState.value ? @android:color/black : @android:color/darker_gray}"/>
+    </LinearLayout>
+</layout>

@@ -1,36 +1,52 @@
 package com.dhara.gameoflife.adapter;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
+import com.dhara.gameoflife.BR;
+import com.dhara.gameoflife.adapter.viewholder.StateViewHolder;
+import com.dhara.gameoflife.callbacks.ICellClickHandlers;
+import com.dhara.gameoflife.model.BindableBoolean;
 
-public class CellAdapter extends BaseAdapter {
-    private final Context mContext;
+public class CellAdapter extends RecyclerView.Adapter<StateViewHolder> {
+    private final int RESOURCE;
     private int totalCount;
     private int rowPosition;
     private int columnPosition;
-    private boolean mCellStates[][];
+    private BindableBoolean mCellStates[][];
 
-    public CellAdapter(Context context, boolean states[][]) {
-        mContext = context;
+    public CellAdapter(int resource, BindableBoolean states[][]) {
+        RESOURCE = resource;
         rowPosition = 0;
         columnPosition = 0;
         mCellStates = states;
         totalCount = getColumnCount() * getRowCount();
     }
 
+
     @Override
-    public int getCount() {
-        return totalCount;
+    public StateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                RESOURCE, parent, false);
+        return new StateViewHolder(binding);
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(StateViewHolder holder, final int position) {
+        holder.getBindingView().setVariable(BR.cellState,getItem(position));
+        holder.getBindingView().setVariable(BR.handler, new ICellClickHandlers() {
+            @Override
+            public void onItemClicked(View view) {
+                int rowPosition = getRowPosition(position);
+                int columnPosition = getColumnPosition(position);
+                mCellStates[rowPosition][columnPosition].setValue(!mCellStates[rowPosition][columnPosition].isValue());
+            }
+        });
+        holder.getBindingView().executePendingBindings();
     }
 
     @Override
@@ -39,18 +55,14 @@ public class CellAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        TextView textView;
-        if (convertView == null) {
-            textView = new TextView(mContext);
-        }else {
-            textView = (TextView) convertView;
-        }
-        columnPosition = position % mCellStates[0].length;
-        rowPosition = (position - columnPosition)/mCellStates[0].length;
-        textView.setTextColor(mCellStates[rowPosition][columnPosition] ?
-                Color.parseColor("#000000") : Color.parseColor("#00000000"));
-        return textView;
+    public int getItemCount() {
+        return totalCount;
+    }
+
+    public BindableBoolean getItem(int position) {
+        columnPosition = getColumnPosition(position);
+        rowPosition = getRowPosition(position);
+        return getItem(rowPosition, columnPosition);
     }
 
     public int getRowCount() {
@@ -61,11 +73,15 @@ public class CellAdapter extends BaseAdapter {
         return mCellStates[0].length;
     }
 
-    public Object getItem(int rowNum, int columnNum) {
+    public BindableBoolean getItem(int rowNum, int columnNum) {
         return mCellStates[rowNum][columnNum];
     }
 
-    public void setStates(boolean[][] states) {
-        mCellStates = states;
+    public int getColumnPosition(int position) {
+        return position % mCellStates[0].length;
+    }
+
+    public int getRowPosition(int position) {
+        return (position - getColumnPosition(position))/mCellStates[0].length;
     }
 }

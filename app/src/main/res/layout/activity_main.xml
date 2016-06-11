@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.dhara.gameoflife.MainActivity">
-
-    <GridView
-        android:id="@+id/grid_view"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="mainViewModel"
+                  type="com.dhara.gameoflife.viewmodels.MainActivityViewModel"/>
+    </data>
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/lnr_buttons"
-        android:numColumns="20"/>
+        tools:context=".activities.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/lnr_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:weightSum="2">
-        <Button
-            android:id="@+id/btn_start"
-            android:layout_width="0dip"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_states"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/lnr_buttons"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/lnr_buttons"
+            android:clickable="true"
+            app:visibility="@{mainViewModel.tempViewVisibility}"/>
+
+        <LinearLayout
+            android:id="@+id/lnr_buttons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/start"/>
-        <Button
-            android:id="@+id/btn_stop"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/stop"/>
-    </LinearLayout>
-</RelativeLayout>
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:weightSum="2">
+            <Button
+                android:id="@+id/btn_start"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/start"
+                android:onClick="@{mainViewModel.onStartClicked}"/>
+            <Button
+                android:id="@+id/btn_stop"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/stop"
+                android:onClick="@{mainViewModel.onStopClicked}"/>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
