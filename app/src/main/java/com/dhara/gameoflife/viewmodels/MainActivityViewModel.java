@@ -3,26 +3,23 @@ package com.dhara.gameoflife.viewmodels;
 import android.databinding.ObservableInt;
 import android.view.View;
 
-import com.dhara.gameoflife.GameOfLifeApp;
 import com.dhara.gameoflife.callbacks.IActivityMainClickHandlers;
-import com.dhara.gameoflife.manager.CellStateManager;
+import com.dhara.gameoflife.callbacks.IResponseListener;
 import com.dhara.gameoflife.model.BindableBoolean;
+import com.dhara.gameoflife.utils.ComputationServiceImpl;
+import com.dhara.gameoflife.utils.RxJavaUtils;
 
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 
-public class MainActivityViewModel implements ViewModel, IActivityMainClickHandlers {
+public class MainActivityViewModel implements ViewModel, IActivityMainClickHandlers, IResponseListener {
     public ObservableInt tempViewVisibility;
     private BindableBoolean[][] mCellStates;
     private Subscription mSubscription;
+    private IResponseListener mResponseListener;
 
     public MainActivityViewModel(BindableBoolean[][] cellStates) {
         mCellStates = cellStates;
+        mResponseListener = this;
         tempViewVisibility = new ObservableInt(View.GONE);
     }
 
@@ -49,34 +46,16 @@ public class MainActivityViewModel implements ViewModel, IActivityMainClickHandl
     }
 
     private void performOperations() {
-        Observable<BindableBoolean[][]> observable =
-                Observable.interval(200,TimeUnit.MILLISECONDS)
-                        .map(new Func1<Long, BindableBoolean[][]>() {
-                            @Override
-                            public BindableBoolean[][] call(Long aLong) {
-                                return CellStateManager.performAnimation(mCellStates,
-                                        mCellStates.length, mCellStates[0].length);
-                            }
-                        });
+        RxJavaUtils rxJavaUtils = new RxJavaUtils(new ComputationServiceImpl().getObservable(mCellStates));
+        mSubscription = rxJavaUtils.getSubscription(mResponseListener);
+    }
 
-        mSubscription = observable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(GameOfLifeApp.getAppContext().defaultSubscribeScheduler())
-                .subscribe(new Subscriber<BindableBoolean[][]>() {
-                    @Override
-                    public void onCompleted() {
+    @Override
+    public void onResponseReceived(BindableBoolean[][] newStates) {
+        mCellStates = newStates;
+    }
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(BindableBoolean[][] newCellStates) {
-                        mCellStates = newCellStates;
-                    }
-                });
+    @Override
+    public void onError() {
     }
 }

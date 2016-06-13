@@ -1,13 +1,26 @@
 package com.dhara.gameoflife;
 
-import android.app.Application;
 import android.test.ApplicationTestCase;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class ApplicationTest extends ApplicationTestCase<Application> {
+import org.junit.After;
+import org.junit.Test;
+
+public class ApplicationTest extends ApplicationTestCase<GameOfLifeApp> {
+    private GameOfLifeApp mApp;
     public ApplicationTest() {
-        super(Application.class);
+        super(GameOfLifeApp.class);
+    }
+
+    @Test
+    protected void setUp() throws Exception {
+        super.setUp();
+        createApplication();
+        mApp = getApplication();
+        assertNotNull(mApp);
+    }
+
+    @After
+    public void tearDown() {
+        terminateApplication();
     }
 }

@@ -14,7 +14,7 @@
         android:layout_height="20dp"
         android:padding="5dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:onClick="@{handler.onItemClicked}">
+        android:onClick="@{handler::onItemClicked}">
         <TextView
             android:id="@+id/txt_cell_state"
             android:layout_width="wrap_content"

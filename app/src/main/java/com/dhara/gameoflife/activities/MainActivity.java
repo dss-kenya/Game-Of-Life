@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 
-import com.dhara.gameoflife.BR;
 import com.dhara.gameoflife.GameOfLifeApp;
 import com.dhara.gameoflife.R;
 import com.dhara.gameoflife.adapter.CellAdapter;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         mStates = StaticManager.getInitialStates();
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.setVariable(BR.mainViewModel, new MainActivityViewModel(mStates));
+        binding.setMainViewModel(new MainActivityViewModel(mStates));
 
         final GridLayoutManager layoutManager = new GridLayoutManager(GameOfLifeApp.getAppContext(),
                 20, GridLayoutManager.VERTICAL, false);

@@ -20,7 +20,7 @@ public class GameOfLifeApp extends Application{
 
     public static GameOfLifeApp getAppContext() {
         if(mApp == null) {
-            mApp = (GameOfLifeApp)mContext;
+            mApp = (GameOfLifeApp)(mContext == null ? new GameOfLifeApp() : mContext);
         }
         return mApp;
     }
