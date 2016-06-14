@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply from: '../jacoco.gradle'
+apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 23
@@ -27,7 +27,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            testCoverageEnabled = true
+            testCoverageEnabled true
         }
     }
     // Always show the result of every unit test, even if it passes.
@@ -44,6 +44,13 @@ android {
 
         }
     }
+
+    jacocoAndroidUnitTestReport {
+        csv.enabled false
+        html.enabled true
+        xml.enabled true
+    }
+
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
         if(variant.buildType.name.equals('release')
