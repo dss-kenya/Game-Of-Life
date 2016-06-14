@@ -41,10 +41,12 @@ public class MainActivityTest {
 
         Thread.sleep(500);
 
+        // test that the clicked cell is colored black and it has a tag true
         onView(withRecyclerView(R.id.recycler_view_states)
                 .atPositionOnView(0, R.id.txt_cell_state))
                 .check(matches(RecyclerViewMatcher.withTag(true)));
 
+        // test that the cell not clicked has a tag false
         onView(withRecyclerView(R.id.recycler_view_states)
                 .atPositionOnView(2, R.id.txt_cell_state))
                 .check(matches(RecyclerViewMatcher.withTag(false)));
@@ -52,14 +54,20 @@ public class MainActivityTest {
 
     @Test
     public void testOnStartClicked() throws InterruptedException{
+        // perform the click
         onView(withId(R.id.btn_start)).perform(click());
+
+        // when the animation starts, the temp linear layout is set to visible
+        // to prevent user clicks on calculated patterns
         onView(withId(R.id.lnr_temp)).check(isVisible());
 
+        // perform a click on an item
         onView(withId(R.id.recycler_view_states)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
 
         Thread.sleep(500);
 
+        // assert that it will not work
         onView(withRecyclerView(R.id.recycler_view_states)
                 .atPositionOnView(3, R.id.txt_cell_state))
                 .check(matches(RecyclerViewMatcher.withTag(false)));
