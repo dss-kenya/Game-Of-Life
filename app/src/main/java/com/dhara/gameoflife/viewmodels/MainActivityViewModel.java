@@ -25,6 +25,11 @@ public class MainActivityViewModel implements ViewModel, IActivityMainClickHandl
 
     @Override
     public void onStartClicked(View view) {
+        /**
+         * When the click on the start button is triggered,
+         * the temp layout is set to visible mode to prevent
+         * user clicks on the cells
+         */
         tempViewVisibility.set(View.VISIBLE);
         performOperations();
     }
@@ -33,6 +38,9 @@ public class MainActivityViewModel implements ViewModel, IActivityMainClickHandl
     public void onStopClicked(View view) {
         tempViewVisibility.set(View.GONE);
 
+        /**
+         * Un-subscribe the subscription
+         */
         if(mSubscription != null) {
             mSubscription.unsubscribe();
         }
@@ -45,10 +53,17 @@ public class MainActivityViewModel implements ViewModel, IActivityMainClickHandl
         }
     }
 
+    /**
+     * For testing
+     * @param subscription
+     */
     public void setSubscription(Subscription subscription) {
         this.mSubscription = subscription;
     }
 
+    /**
+     * Performs the operations on the cells
+     */
     private void performOperations() {
         RxJavaUtils rxJavaUtils = new RxJavaUtils(new ComputationServiceImpl().getObservable(mCellStates));
         mSubscription = rxJavaUtils.getSubscription(mResponseListener);

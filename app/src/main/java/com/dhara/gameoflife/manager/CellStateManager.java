@@ -30,12 +30,12 @@ public class CellStateManager {
             for(int y=j-1;y<=j+1;y++) {
                 if(x==i&&y==j)
                     continue;
-                count += eval(states,x,y, rows, cols);
+                count += evaluate(states,x,y, rows, cols);
             }
         return count;
     }
 
-    private static int eval(BindableBoolean[][] states, int i, int j, int rows, int cols) {
+    private static int evaluate(BindableBoolean[][] states, int i, int j, int rows, int cols) {
         if(i<0||j<0||i==rows||j==cols)
             return 0;
         if(states[i][j].isValue())

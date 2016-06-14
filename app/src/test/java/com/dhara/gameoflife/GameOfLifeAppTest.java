@@ -35,9 +35,7 @@ public class GameOfLifeAppTest {
     public void testGetAppContext() {
         // mocking the static method
         PowerMockito.mockStatic(GameOfLifeApp.class);
-        mApp.onCreate();
         PowerMockito.when(GameOfLifeApp.getAppContext()).thenReturn(mApp);
-
         assertNotNull(mContext);
         assertNotNull(mApp);
     }

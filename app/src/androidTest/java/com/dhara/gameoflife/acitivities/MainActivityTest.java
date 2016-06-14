@@ -72,14 +72,14 @@ public class MainActivityTest {
                 .atPositionOnView(3, R.id.txt_cell_state))
                 .check(matches(RecyclerViewMatcher.withTag(false)));
 
-        Thread.sleep(1000);
+        Thread.sleep(200);
     }
 
     @Test
     public void testOnStopClicked() throws InterruptedException {
         onView(withId(R.id.btn_stop)).perform(click());
         onView(withId(R.id.lnr_temp)).check(isGone());
-        Thread.sleep(1000);
+        Thread.sleep(200);
     }
 
     @Test

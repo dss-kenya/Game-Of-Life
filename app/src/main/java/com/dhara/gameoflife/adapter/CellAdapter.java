@@ -19,6 +19,11 @@ public class CellAdapter extends RecyclerView.Adapter<StateViewHolder> {
     private int columnPosition;
     private BindableBoolean mCellStates[][];
 
+    /**
+     * Constructor
+     * @param resource
+     * @param states
+     */
     public CellAdapter(int resource, BindableBoolean states[][]) {
         RESOURCE = resource;
         rowPosition = 0;
@@ -59,6 +64,11 @@ public class CellAdapter extends RecyclerView.Adapter<StateViewHolder> {
         return totalCount;
     }
 
+    /**
+     * Get the position from the 2D Array and display it as a 1D array
+     * @param position
+     * @return
+     */
     public BindableBoolean getItem(int position) {
         columnPosition = getColumnPosition(position);
         rowPosition = getRowPosition(position);
