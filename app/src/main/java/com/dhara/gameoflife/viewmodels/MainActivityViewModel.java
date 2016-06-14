@@ -45,6 +45,10 @@ public class MainActivityViewModel implements ViewModel, IActivityMainClickHandl
         }
     }
 
+    public void setSubscription(Subscription subscription) {
+        this.mSubscription = subscription;
+    }
+
     private void performOperations() {
         RxJavaUtils rxJavaUtils = new RxJavaUtils(new ComputationServiceImpl().getObservable(mCellStates));
         mSubscription = rxJavaUtils.getSubscription(mResponseListener);

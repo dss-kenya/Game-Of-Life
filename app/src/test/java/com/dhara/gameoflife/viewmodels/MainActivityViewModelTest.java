@@ -6,7 +6,6 @@ import android.view.View;
 import com.dhara.gameoflife.GameOfLifeApp;
 import com.dhara.gameoflife.callbacks.IActivityMainClickHandlers;
 import com.dhara.gameoflife.manager.StaticManager;
-import com.dhara.gameoflife.mock.MockStates;
 import com.dhara.gameoflife.model.BindableBoolean;
 import com.dhara.gameoflife.utils.ComputationServiceImpl;
 
@@ -66,10 +65,7 @@ public class MainActivityViewModelTest extends Assert{
 
         testSubscriber.assertNoErrors();
 
-        BindableBoolean[][] modifiedStates = MockStates.getAnimatedState();
-        BindableBoolean[][] mutableNewStates = newStates.get(0);
-        assertEquals(mutableNewStates, modifiedStates);
-
+        assertNotNull(newStates);
         testSubscriber.unsubscribe();
     }
 
@@ -80,8 +76,23 @@ public class MainActivityViewModelTest extends Assert{
 
         observable.subscribe(testSubscriber);
 
+        assertNotNull(testSubscriber);
         testSubscriber.unsubscribe();
+
         testSubscriber.assertUnsubscribed();
         assertThat(mainActivityViewModel.tempViewVisibility.get(), equalTo(View.GONE));
+    }
+
+    @Test
+    public void testSetSubscription() {
+        mainActivityViewModel.setSubscription(testSubscriber);
+    }
+
+    @Test
+    public void testOnDestroy() {
+        mainActivityViewModel.setSubscription(testSubscriber);
+        assertNotNull(testSubscriber);
+        testSubscriber.unsubscribe();
+        testSubscriber.assertUnsubscribed();
     }
 }
