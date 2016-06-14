@@ -73,4 +73,9 @@ public class MainActivityTest {
         onView(withId(R.id.lnr_temp)).check(isGone());
         Thread.sleep(1000);
     }
+
+    @Test
+    public void testOnDestroy() {
+        mActivityRule.getActivity().finish();
+    }
 }
