@@ -14,6 +14,7 @@ This application uses the gradle build system
 - Download Android Studio IDE with the sdks
 - Clone this application or import it like every other android app
 - If needed set the path to jdk in gradle.properties file
+- An apk is attached with this source in the main folder with the name GameOfLife_v1_0.apk
 
 # Testing #
 This application has been tested on Android Lollipop and Marshmallow.
