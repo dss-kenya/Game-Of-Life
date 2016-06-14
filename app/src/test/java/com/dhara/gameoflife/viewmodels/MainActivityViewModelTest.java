@@ -1,9 +1,6 @@
 package com.dhara.gameoflife.viewmodels;
 
-import android.content.Intent;
-import android.test.ViewAsserts;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.dhara.gameoflife.GameOfLifeApp;
@@ -19,8 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
 import java.util.List;
@@ -30,7 +25,6 @@ import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 

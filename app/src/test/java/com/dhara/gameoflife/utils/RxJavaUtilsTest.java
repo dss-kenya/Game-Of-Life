@@ -4,13 +4,10 @@ import com.dhara.gameoflife.GameOfLifeApp;
 import com.dhara.gameoflife.callbacks.IResponseListener;
 import com.dhara.gameoflife.mock.MockStates;
 import com.dhara.gameoflife.model.BindableBoolean;
-import com.dhara.gameoflife.utils.interfaces.ComputationService;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;

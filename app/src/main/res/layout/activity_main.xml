@@ -41,14 +41,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/start"
-                android:onClick="@{mainViewModel::onStartClicked}"/>
+                android:onClick="@{mainViewModel.onStartClicked}"/>
             <Button
                 android:id="@+id/btn_stop"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/stop"
-                android:onClick="@{mainViewModel::onStopClicked}"/>
+                android:onClick="@{mainViewModel.onStopClicked}"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

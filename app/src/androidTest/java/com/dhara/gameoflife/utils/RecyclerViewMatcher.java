@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 
 import static android.support.test.espresso.intent.Checks.checkNotNull;
-import static org.hamcrest.Matchers.is;
 
 public class RecyclerViewMatcher {
     private static Bitmap mBitmap;
@@ -46,7 +46,27 @@ public class RecyclerViewMatcher {
     }
 
     public static Matcher<View> withColor(int color) {
-        return withSelectedBackground(is(color));
+        return withSelectedBackground(Matchers.equalTo(color));
+    }
+
+    public static Matcher<Object> withTag(Object tagValue) {
+        return withTagValue(Matchers.equalTo(tagValue));
+    }
+
+    private static Matcher<Object> withTagValue(final Matcher<Object> tagValue) {
+        checkNotNull(tagValue);
+        return new BoundedMatcher<Object, TextView>(TextView.class) {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with tag: ");
+                tagValue.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(TextView textView) {
+                return tagValue.matches(textView.getTag());
+            }
+        };
     }
 
     private static Matcher<View> withSelectedBackground(final Matcher<Integer> bgMatcher) {
@@ -54,14 +74,16 @@ public class RecyclerViewMatcher {
         return new BoundedMatcher<View, TextView>(TextView.class) {
             @Override
             public void describeTo(Description description) {
-                description.appendText("with bg: ");
-                bgMatcher.describeTo(description);
+                description.appendText("with background color: ");
 
                 String colorName;
+
                 if (bgMatcher.matches(COLOR_DARKER_GRAY)) colorName = "DARKER_GRAY";
                 else if (bgMatcher.matches(COLOR_BLACK)) colorName = "BLACK";
                 else colorName = "TRANSPARENT";
-                description.appendText("View color must has equals " + colorName);
+                description.appendText("View color must be " + colorName);
+
+                bgMatcher.describeTo(description);
             }
 
             @Override
@@ -84,8 +106,7 @@ public class RecyclerViewMatcher {
                     viewBackground.draw(mCanvas);
                     colorId = mBitmap.getPixel(0, 0);
                     viewBackground.setBounds(mBounds); // Restore the original bounds.
-                }
-                else {
+                } else {
                     colorId = viewBackground.getColor();
                 }
                 return bgMatcher.matches(colorId);
