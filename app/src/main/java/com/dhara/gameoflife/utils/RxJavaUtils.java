@@ -41,4 +41,8 @@ public class RxJavaUtils {
             }
         };
     }
+
+    public void setObservable(Observable<BindableBoolean[][]> observable) {
+        this.mObservable = observable;
+    }
 }
