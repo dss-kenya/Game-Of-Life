@@ -20,8 +20,8 @@ This application uses the gradle build system
 This application has been tested on Android Lollipop and Marshmallow.
 Android Instrumentation test cases and also Unit test cases with JaCoCo Coverage reports are present
 
-To run a coverage test run, simply type gradlew createProdDebugCoverageReport in the terminal
-The reports are located in the folder build/reports/coverage/prod/debug/index.html
+To run a coverage test run, simply type *gradlew createProdDebugCoverageReport* in the terminal
+The reports are located in the folder *build/reports/coverage/prod/debug/index.html*
 
 # Contact #
 In case of any doubts, you can contact *sdhara2@hotmail.com*
