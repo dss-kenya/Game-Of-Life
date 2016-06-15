@@ -25,4 +25,4 @@ To run a coverage test run, simply type ***gradlew createProdDebugCoverageReport
 The reports are located in the folder ***build/reports/coverage/prod/debug/index.html***
 
 # Contact #
-In case of any doubts, you can contact *sdhara2@hotmail.com*
+In case of any doubts, you can contact ***sdhara2@hotmail.com***
